@@ -7,16 +7,23 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-const uploadsDir = path.join(__dirname, '..', 'uploads');
+/**
+ * En Vercel sólo /tmp es escribible.
+ * En local seguimos usando /uploads del proyecto.
+ */
+const uploadsDir = process.env.VERCEL
+  ? '/tmp/uploads'
+  : path.join(__dirname, '..', 'uploads');
+
 fs.mkdirSync(uploadsDir, { recursive: true });
 
 const upload = multer({
   dest: uploadsDir,
-  limits: { fileSize: 10 * 1024 * 1024 },
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
   fileFilter: (req, file, cb) => {
     const ok = /^image\/(png|jpe?g)$/i.test(file.mimetype || '');
     cb(ok ? null : new Error('Solo PNG/JPG'), ok);
-  }
+  },
 });
 
 router.get('/campos', ctrl.getCampos);
