@@ -43,10 +43,6 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ error: 'Request error', detail: err.message });
 });
 
-// Solo escuchar en local
-if (!process.env.VERCEL) {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => console.log(`API local: http://localhost:${PORT}`));
-}
+
 
 module.exports = app;
