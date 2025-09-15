@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "engines": {
+    "node": "18"
+  },
   "dependencies": {
     "argon2": "^0.44.0",
     "axios": "^1.11.0",

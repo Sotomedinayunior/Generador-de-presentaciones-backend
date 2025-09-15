@@ -1,9 +1,10 @@
-// config/paths.js
+// backend/config/paths.js
 const path = require('path');
 
-const TEMPLATE_PATH = path.join(process.cwd(), 'plantillas.pdf'); // empaquetado
-const OUT_DIR = process.env.VERCEL
-  ? '/tmp/files'                              // Vercel: sólo /tmp es escribible
-  : path.join(process.cwd(), 'files');        // local
+const isVercel = !!process.env.VERCEL;
+const ROOT = process.cwd(); // será /var/task en Vercel
+
+const TEMPLATE_PATH = path.join(ROOT, 'plantillas.pdf');
+const OUT_DIR = isVercel ? '/tmp' : path.join(ROOT, 'files');
 
 module.exports = { TEMPLATE_PATH, OUT_DIR };
