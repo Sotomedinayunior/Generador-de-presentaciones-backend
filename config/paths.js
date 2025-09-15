@@ -1,11 +1,10 @@
-//config/paths.js
-
 const path = require('path');
 
-const TEMPLATE_PATH = path.resolve(__dirname, '../plantillas.pdf');
-const OUT_DIR = path.resolve(__dirname, '../files');
+const ROOT = process.cwd();
+// si corres en Vercel o en serverless, usa /tmp (es la única escribible)
+const IS_SERVERLESS = !!process.env.VERCEL || !!process.env.NOW_REGION;
 
-module.exports = {
-  TEMPLATE_PATH,
-  OUT_DIR
-};
+const TEMPLATE_PATH = path.join(ROOT, 'plantillas.pdf'); // asegúrate de que el archivo se sube al repo
+const OUT_DIR = IS_SERVERLESS ? '/tmp/files' : path.join(ROOT, 'files');
+
+module.exports = { TEMPLATE_PATH, OUT_DIR };
