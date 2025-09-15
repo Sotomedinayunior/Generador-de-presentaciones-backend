@@ -69,11 +69,9 @@ app.use((err, req, res, next) => {
 });
 
 // ---- Export / Listen según entorno ----
-if (IS_VERCEL) {
-  // En Vercel exportamos el app (no usamos listen)
-  module.exports = app;
-} else {
-  app.listen(PORT, () =>
-    console.log(`API escuchando en http://localhost:${PORT}`)
-  );
+if (!process.env.VERCEL) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
 }
+
+module.exports = app;
