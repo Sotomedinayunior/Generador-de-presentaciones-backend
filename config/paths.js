@@ -1,15 +1,9 @@
 // config/paths.js
 const path = require('path');
 
-const ROOT = process.cwd();                         // raíz del bundle
-const IS_SERVERLESS = !!process.env.VERCEL;         // Vercel/Lambda
+const TEMPLATE_PATH = path.join(process.cwd(), 'plantillas.pdf'); // empaquetado
+const OUT_DIR = process.env.VERCEL
+  ? '/tmp/files'                              // Vercel: sólo /tmp es escribible
+  : path.join(process.cwd(), 'files');        // local
 
-// Asegúrate que "plantillas.pdf" esté en el repo y no ignorado
-const TEMPLATE_PATH = path.join(ROOT, 'plantillas.pdf');
-
-// En Vercel escribir SIEMPRE en /tmp; en local usa ./files
-const OUT_DIR = IS_SERVERLESS
-  ? '/tmp/files'
-  : path.join(ROOT, 'files');
-
-module.exports = { TEMPLATE_PATH, OUT_DIR, IS_SERVERLESS };
+module.exports = { TEMPLATE_PATH, OUT_DIR };
